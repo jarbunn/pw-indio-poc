@@ -10,8 +10,8 @@ export class RequestHandler {
     private apiBody: object = {}
 
     constructor(request: APIRequestContext, apiBaseUrl: string) {
-        this.request = request
         this.baseUrl = apiBaseUrl
+        this.request = request
     }
 
     url(url: string) {
@@ -34,7 +34,7 @@ export class RequestHandler {
         return this;
     }
 
-    body(body: object = {}) {
+    body(body: object) {
         this.apiBody = body
         return this;
     }
@@ -46,6 +46,7 @@ export class RequestHandler {
         })
         expect(response.status()).toEqual(statusCode)
         const responseJSON = await response.json()
+
         return responseJSON
     }
 
@@ -55,9 +56,9 @@ export class RequestHandler {
             headers: this.apiHeaders,
             data: this.apiBody
         })
-        console.log(await response.json())
         expect(response.status()).toEqual(statusCode)
         const responseJSON = await response.json()
+
         return responseJSON
     }
 
@@ -69,14 +70,14 @@ export class RequestHandler {
         })
         expect(response.status()).toEqual(statusCode)
         const responseJSON = await response.json()
+
         return responseJSON
     }
 
     async deleteRequest(statusCode: Number) {
         const url = this.getUrl()
-        const response = await this.request.put(url, {
-            headers: this.apiHeaders,
-            data: this.apiBody
+        const response = await this.request.delete(url, {
+            headers: this.apiHeaders
         })
         expect(response.status()).toEqual(statusCode)
     }
